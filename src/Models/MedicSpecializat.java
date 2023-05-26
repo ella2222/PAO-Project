@@ -1,6 +1,8 @@
-import java.util.Date;
+package Models;
 
-public class MedicSpecializat extends Medic{
+import Models.Medic.Medic;
+
+public class MedicSpecializat extends Medic {
 
     private String specializare;
     public MedicSpecializat(int cabinetid, String nume, String prenume, String nrtel, String email, int pret, int id, String specializare) {

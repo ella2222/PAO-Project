@@ -1,3 +1,8 @@
+package Models.Cabinet;
+
+import Models.MainServicii;
+import Models.Medic.Medic;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,4 +91,5 @@ public class Cabinet {
         }
         return id;
     }
+
 }

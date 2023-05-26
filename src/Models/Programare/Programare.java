@@ -1,4 +1,9 @@
-import java.time.LocalDateTime;
+package Models.Programare;
+
+import Models.MainServicii;
+import Models.Medic.Medic;
+import Models.Pacient.Pacient;
+
 import java.util.Date;
 
 public class Programare {

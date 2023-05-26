@@ -1,3 +1,7 @@
+package Models.Pacient;
+
+import Models.MainServicii;
+
 public class Pacient {
     private String nume;
     private String prenume;

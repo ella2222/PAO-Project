@@ -1,4 +1,6 @@
-import java.util.List;
+package Models;
+
+import Models.Medic.Medic;
 
 public class Factura {
     private int id;

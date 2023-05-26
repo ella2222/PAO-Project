@@ -1,5 +1,5 @@
 # PAO-Project
-## Medical Cabinet 
+## Medical Models.Cabinet.Cabinet 
 This is a project that manages a medical cabinet and its clients.
 
 ## Installation
@@ -33,14 +33,14 @@ To install the app, follow these steps:
 ## Objects/Classes
 
 - Main
-- MainServicii
-- Cabinet
-- Pacient
-- Medic
-  1. MedicSpecializat
-  2. MedicFamilie
-- Medicamente
-- Programare
-- Prescriptie
-- Trimitere
-- Factura
+- Models.MainServicii
+- Models.Cabinet.Cabinet
+- Models.Pacient.Pacient
+- Models.Medic.Medic
+  1. Models.MedicSpecializat
+  2. Models.MedicFamilie
+- Models.Medicamente
+- Models.Programare.Programare
+- Models.Prescriptie
+- Models.Trimitere
+- Models.Factura

@@ -1,11 +1,32 @@
+package Models;
+
+import Database.JDBCdatabase;
+import Models.Cabinet.Cabinet;
+import Models.Cabinet.CabinetSingleton;
+import Models.Cabinet.CabinetTable;
+import Models.Medic.Medic;
+import Models.Medic.MedicSingleton;
+import Models.Medic.MedicTable;
+import Models.Pacient.Pacient;
+import Models.Pacient.PacientSingleton;
+import Models.Pacient.PacientiTable;
+import Models.Programare.Programare;
+import Models.Programare.ProgramareSingleton;
+import Models.Programare.ProgramariTable;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.*;
 
 public class MainServicii {
+    static JDBCdatabase connection = new JDBCdatabase();
+    static MedicTable medicTable = new MedicTable(connection);
+    static CabinetTable cabinetTable = new CabinetTable(connection);
+    static PacientiTable pacientiTable = new PacientiTable(connection);
+    static ProgramariTable programariTable = new ProgramariTable(connection);
+
 
     static Medic m1 = new MedicSpecializat(1, "Chiriac", "Ella", "0770673115", "ellachiriac@medi.ro", 1000, 1, "dermatologie");
     static Medic m2 = new MedicSpecializat(1, "Popescu", "Ion", "0745123456", "popion@medi.ro", 700, 2, "oftalmologie");
@@ -58,6 +79,34 @@ public class MainServicii {
     private static int idtrimitere = 0;
     private static int idfactura = 0;
 
+    static {
+        pacientiTable.createPacientiTable();
+        cabinetTable.createCabinetTable();
+        medicTable.createMedicTable();
+        programariTable.createProgramariTable();
+    }
+    static {
+        for (Medic m : medici) {
+            medicTable.addMedic(m);
+        }
+    }
+
+    static {
+        for (Pacient p : pacienti) {
+            pacientiTable.addPacient(p);
+        }
+    }
+    static {
+        for (Cabinet c : cabinete) {
+            cabinetTable.addCabinet(c);
+        }
+    }
+    static {
+        for (Programare pr : programari) {
+            programariTable.addProgramare(pr);
+        }
+    }
+
     public MainServicii() throws ParseException {
     }
 
@@ -85,7 +134,6 @@ public class MainServicii {
         return medicamente;
     }
 
-
     public static void addClient() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Introduceti numele pacientului: ");
@@ -104,6 +152,7 @@ public class MainServicii {
         int id = pacienti.size() + 1;
         Pacient pacient = new Pacient(nume, prenume, cnp, nrtel, id);
         pacienti.add(pacient);
+        pacientiTable.addPacient(pacient);
     }
 
     public static void addProgramare() throws ParseException {
@@ -137,6 +186,7 @@ public class MainServicii {
             int id = programari.size() + 1;
             Programare programare = new Programare(id, idMedic, idPacient, data, ora);
             programari.add(programare);
+            programariTable.addProgramare(programare);
             System.out.println("Programarea a fost adaugata cu succes.");
         }
     }
@@ -154,6 +204,7 @@ public class MainServicii {
         });
         System.out.println("Medicul cel mai ieftin este: " + copieMedici.get(0).getNume() + " " + copieMedici.get(0).getPrenume() + " cu pretul de " + copieMedici.get(0).getPret() + " lei" + " si numarul de telefon " + copieMedici.get(0).getNrtel());
 
+        medicTable.getMedicieftin();
     }
 
     public static void afisareMedicamente() {
@@ -166,6 +217,7 @@ public class MainServicii {
         for (Programare programare : programari) {
             System.out.println("Data programarii: " + programare.getData() + "\nOra programarii: " + programare.getOra()  + "\nNume pacient: " + programare.numePacient()  + "\nNume medic: " + programare.numeMedic() + "\n");
         }
+        programariTable.getProgramari();
     }
 
     public static void trimitereProgramare() throws ParseException {
@@ -222,6 +274,7 @@ public class MainServicii {
                 programari.remove(programare);
             }
         }
+        programariTable.deleteProgramareinaintededata(java.sql.Date.valueOf(LocalDate.now()));
     }
 
     public static int crearePrescriptieIeftina() {
@@ -352,12 +405,14 @@ public class MainServicii {
                 cabinete.remove(cabinet);
             }
         }
+        cabinetTable.deleteCabinet(idCabinet);
     }
 
     public static void afisareClienti() {
         for(Pacient pacient : pacienti){
             System.out.println(pacient.getId() + ". " + pacient.getNume() + " " + pacient.getPrenume());
         }
+        pacientiTable.getPacienti();
     }
 
     public static void afisareMedici() {
@@ -372,6 +427,7 @@ public class MainServicii {
                 System.out.println(medic.getId() + ". " + medic.getNume() + " " + medic.getPrenume() + " - " + medic.getNrtel());
             }
         }
+        medicTable.getMedicibycabinet(idCabinet);
     }
 
     public static void finish(){

@@ -1,3 +1,5 @@
+package Models;
+
 public class Medicamente {
     private String nume;
     private String producator;

@@ -1,9 +1,13 @@
+import Database.JDBCdatabase;
+import Models.MainServicii;
+
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     static List<String> descrierecomenzi = Arrays.asList("Adauga un client", "Adauga o programare", "Cauta medicul de familie cel mai ieftin", "Afiseaza medicamentele", "Afiseaza programarile", "Creeaza o programare de la trimiterea primita", "Sterge programarile care au avut loc deja", "Creaza o prescriptie ieftina", "Calculeaza factura unei anumite programari", "Sterge un cabinet", "Afisare clienti", "Afisare medici dintr-un anumit cabinet", "Iesire program");
 
     public static void printeazacomenzi() {
@@ -13,6 +17,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws ParseException {
+        Runtime.getRuntime().addShutdownHook(new Thread(Main::stergebaza));
+        Runtime.getRuntime().addShutdownHook(new Thread(Main::inchideconexiunea));
         printeazacomenzi();
         Scanner scanner = new Scanner(System.in);
         String comanda = scanner.nextLine();
@@ -73,5 +79,15 @@ public class Main {
                 break;
             }
         }
+    }
+
+    private static void stergebaza() {
+        JDBCdatabase con = new JDBCdatabase();
+        con.stergebaza();
+    }
+
+    private static void inchideconexiunea() {
+        JDBCdatabase con = new JDBCdatabase();
+        con.inchidecon();
     }
 }
